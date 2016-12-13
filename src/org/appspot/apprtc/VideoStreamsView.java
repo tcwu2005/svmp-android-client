@@ -68,6 +68,7 @@ public class VideoStreamsView
   private int posLocation = -1;
   private long lastFPSLogTime = System.nanoTime();
   private long numFramesSinceLastLog = 0;
+    private long oldtime =0;/////////////////////////////////////////////////////////
   private FramePool framePool = new FramePool();
   // Accessed on multiple threads!  Must be synchronized.
   private EnumMap<Endpoint, I420Frame> framesToRender =
@@ -75,6 +76,8 @@ public class VideoStreamsView
 
   // used for performance instrumentation
   private PerformanceAdapter spi;
+
+  private I420Frame prev_frame;///////////////////////////////////////////
 
   public VideoStreamsView(Context c, Point screenDimensions, PerformanceAdapter spi) {
     super(c);
@@ -89,6 +92,7 @@ public class VideoStreamsView
 
   /** Queue |frame| to be uploaded. */
   public void queueFrame(final Endpoint stream, I420Frame frame) {
+      Log.d("LATENCY","In queueFrame");///////////////////////////////////////////////////////////////////////////////////
     // Paying for the copy of the YUV data here allows CSC and painting time
     // to get spent on the render thread instead of the UI thread.
     abortUnless(framePool.validateDimensions(frame), "Frame too large!");
@@ -99,12 +103,23 @@ public class VideoStreamsView
       // already a render scheduled, which is true iff framesToRender is empty.
       needToScheduleRender = framesToRender.isEmpty();
       I420Frame frameToDrop = framesToRender.put(stream, frameCopy);
+        if(frameToDrop != null) {
+            Log.d("LATENCY", "Compare Frame: " + frameToDrop.equals(frameCopy));
+            for (int i = 0; i < 3; i++) {
+                Log.d("LATENCY", "Compare Frame yuvplane: " + frameToDrop.yuvPlanes[i].compareTo(frameCopy.yuvPlanes[i]));///////////////////////////
+            }
+        }
       if (frameToDrop != null) {
         framePool.returnFrame(frameToDrop);
       }
     }
+      Log.d("LATENCY","to run scheduling");////////////////////////////////////////////////
+      Log.d("LATENCY","Stream: " + stream);
     if (needToScheduleRender) {
-      queueEvent(new Runnable() {
+        Log.d("LATENCY","Stream: " + stream);//////////////////////////////////////////////
+        Log.d("LATENCY","Run a new thread ");
+
+        queueEvent(new Runnable() {
           public void run() {
             updateFrames();
           }
@@ -129,8 +144,14 @@ public class VideoStreamsView
       framePool.returnFrame(remoteFrame);
     }
     abortUnless(/*localFrame != null || */remoteFrame != null,
-                "Nothing to render!");
+            "Nothing to render!");
     requestRender();
+    //AJE
+    long time= System.currentTimeMillis();////////////////////////////////////////////////////////////////////////////////
+      Log.d("LATENCY", "REQ_RENDER at: " + time);
+      Log.d("LATENCY", "INTERVAL at: " + (time-oldtime));
+      oldtime = time;
+
   }
 
   /** Inform this View of the dimensions of frames coming from |stream|. */
@@ -188,6 +209,9 @@ public class VideoStreamsView
       numFramesSinceLastLog = 1;
     }
     checkNoGLES2Error();
+    //AJE
+    //long time= System.currentTimeMillis();
+    //Log.d("LATENCY","DrawFrame at: "+time);
   }
 
   @Override
@@ -278,6 +302,7 @@ public class VideoStreamsView
   // Poor-man's assert(): die with |msg| unless |condition| is true.
   private static void abortUnless(boolean condition, String msg) {
     if (!condition) {
+        Log.d("ABORT",msg);
       throw new RuntimeException(msg);
     }
   }

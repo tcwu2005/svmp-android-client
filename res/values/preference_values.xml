@@ -37,6 +37,7 @@
     <string name="preferenceKey_connection_useMTM">connection_useMTM</string>
     <string name="preferenceKey_connection_showEncryption">connection_showEncryption</string>
     <string name="preferenceKey_connection_useDesktopMode">connection_useDesktopMode</string>
+    <string name="preferenceKey_connection_useDirectConn">connection_useDirectConn</string>
 
     <!-- Preference value defaults -->
     <string name="preferenceValue_sensors_minimumDelay">1000</string>
@@ -60,9 +61,10 @@
     <string name="preferenceValue_connection_useMTM">false</string>
     <string name="preferenceValue_connection_showEncryption">false</string>
     <string name="preferenceValue_connection_useDesktopMode">false</string>
+    <string name="preferenceValue_connection_useDirectConn">false</string>
     
     <!-- Preference page elements -->
-    <string name="preferenceScreen_title">SVMP Preferences</string>
+    <string name="preferenceScreen_title">VMI Preferences</string>
 
     <string name="preferenceCategory_connectionPreferences_title">Connection Preferences</string>
 
@@ -132,5 +134,7 @@
     <string name="checkBoxPreference_connection_showEncryption_summary">Allows setting encryption type for connections</string>
     <string name="checkBoxPreference_connection_useDesktopMode_title">Use desktop mode</string>
     <string name="checkBoxPreference_connection_useDesktopMode_summary">Allows use of whole virtual desktop, not just apps</string>
+    <string name="checkBoxPreference_connection_useDirectConn_title">Direct Connection</string>
+    <string name="checkBoxPreference_connection_useDirectConn_summary">On start, directly choose the first connection list</string>
 
 </resources>

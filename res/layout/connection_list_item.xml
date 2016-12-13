@@ -29,6 +29,7 @@
             android:layout_height="fill_parent"
             android:id="@+id/connectionListItem_lockImage"
             android:layout_alignParentStart="false"
+                 android:layout_alignParentLeft="false"
             android:src="@drawable/padlock_green"
             android:adjustViewBounds="true" android:scaleType="centerInside" android:cropToPadding="false"
             android:baselineAlignBottom="false" android:maxWidth="30dp"

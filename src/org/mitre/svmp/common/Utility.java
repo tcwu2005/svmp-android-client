@@ -29,7 +29,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import org.mitre.svmp.activities.AppList;
-import org.mitre.svmp.client.R;
+import org.itri.vmi.client.R;
 import org.mitre.svmp.protocol.SVMPProtocol.LocationRequest;
 import org.mitre.svmp.protocol.SVMPProtocol.LocationUpdate;
 import org.mitre.svmp.protocol.SVMPProtocol.LocationProviderInfo;
@@ -48,7 +48,7 @@ public class Utility {
         return activityManager.getLauncherLargeIconDensity();
     }
 
-    public static void createShortcut(Context context, AppInfo appInfo) {
+    public static void createShortcut(Context context, AppInfo appInfo) {////////////////////////////////////////////////
         // figure out what screen density we are targeting
         int screenDensity = getScreenDensity(context);
 
@@ -211,7 +211,7 @@ public class Utility {
         return sharedPreferences.getBoolean(key, defaultValue);
     }
 
-    public static Request toRequest_LocationProviderInfo(LocationProvider provider) {
+    public static Request toRequest_LocationProviderInfo(LocationProvider provider) {/////////////////////////////////////////////////////////
         // create a LocationProviderInfo Builder
         LocationProviderInfo.Builder lpiBuilder = LocationProviderInfo.newBuilder()
                 // set required variables

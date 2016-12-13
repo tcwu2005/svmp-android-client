@@ -19,7 +19,7 @@ import android.app.TaskStackBuilder;
 import android.os.Build;
 import org.mitre.svmp.activities.ConnectionList;
 import org.mitre.svmp.protocol.SVMPProtocol;
-
+import org.itri.vmi.client.R;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;

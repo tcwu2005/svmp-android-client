@@ -31,7 +31,7 @@ import org.mitre.svmp.auth.module.IAuthModule;
 import org.mitre.svmp.auth.module.PasswordChangeModule;
 import org.mitre.svmp.auth.module.PasswordModule;
 import org.mitre.svmp.auth.type.IAuthType;
-import org.mitre.svmp.client.R;
+import org.itri.vmi.client.R;
 import org.mitre.svmp.common.ConnectionInfo;
 import org.mitre.svmp.common.Constants;
 import org.mitre.svmp.common.DatabaseHandler;
@@ -41,6 +41,7 @@ import org.mitre.svmp.services.SessionService;
 
 import java.util.HashMap;
 import java.util.Map;
+
 
 /**
  * @author Joe Portner
@@ -61,7 +62,7 @@ public class SvmpActivity extends Activity implements Constants {
 
     public void onCreate(Bundle savedInstanceState, int layoutId) {
         super.onCreate(savedInstanceState);
-
+      
         // if layoutId is -1, we don't use a layout, we are using fragment activities within tab views
 
         // set the layout
@@ -78,6 +79,7 @@ public class SvmpActivity extends Activity implements Constants {
         // change layout depending on preferences
         if (layoutId > -1)
             refreshPreferences();
+        
     }
 
     // override this method in child classes
@@ -422,4 +424,12 @@ public class SvmpActivity extends Activity implements Constants {
         setResult(resultCode, intent);
         finish();
     }
+    
+    protected void finishMessage(int resId, int resultCode, int flag) {//////////////////////////test POC
+        Intent intent = new Intent();
+        intent.putExtra("message", resId);
+        setResult(resultCode, intent);
+    }
+    
+    
 }

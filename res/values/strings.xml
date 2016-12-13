@@ -15,7 +15,7 @@
   limitations under the License.
   -->
 <resources>
-    <string name="app_name">SVMP Client</string>
+    <string name="app_name">VMI</string>
     <string name="error">Error</string>
     <string name="errorCamera">Camera Error</string>
     <string name="codectype_prompt">Choose a codec type</string>
@@ -55,18 +55,20 @@
     <string name="mediacodec">MediaCodec Decoder/Renderer</string>
     <string name="opengl">OpenGL</string>
 
+
     <!-- ConnectionList layout resources -->
-    <string name="connectionList_title">SVMP Connections</string>
+    <string name="connectionList_title">VMI Connections</string>
     <string name="connectionList_button_new_text">New</string>
     <string name="connectionList_button_exit_text">Exit</string>
     <string name="connectionList_context_connectToDesktop_text">Connect to desktop</string>
     <string name="connectionList_context_editConnection_text">Edit connection</string>
+    <string name="connectionList_context_rebootConnection_text">Reboot</string>
     <string name="connectionList_context_removeConnection_text">Remove connection</string>
     <string name="connectionList_context_stop_text">Stop service</string>
     <string name="connectionList_context_changePassword_text">Change password</string>
 
     <!-- ConnectionDetails layout resources -->
-    <string name="connectionDetails_title">SVMP Connection Details</string>
+    <string name="connectionDetails_title">VMI Connection Details</string>
     <string name="connectionDetails_textView_description_text">Description</string>
     <string name="connectionDetails_textView_username_text">Username</string>
     <string name="connectionDetails_textView_host_text">Host</string>
@@ -80,7 +82,7 @@
     <string name="connectionDetails_button_certificate_none_text">none</string>
 
     <!-- AppList layout resources -->
-    <string name="appList_title">SVMP Apps</string>
+    <string name="appList_title">VMI Apps</string>
     <string name="appList_button_refreshList_text">Refresh List</string>
     <string name="appList_actionBar_allApps">All Apps</string>
     <string name="appList_actionBar_favorites">Favorites</string>
@@ -103,8 +105,8 @@
     <string name="connectionDetails_toast_certAuthNeedsAlias">You must select a certificate to use certificate authentication</string>
 
     <!-- SvmpActivity toast resources -->
-    <string name="svmpActivity_toast_sessionMaxTimeout">SVMP session reached max life timeout, please re-authenticate</string>
-    <string name="svmpActivity_toast_sessionIdleTimeout">SVMP session reached idle timeout, please re-authenticate</string>
+    <string name="svmpActivity_toast_sessionMaxTimeout">VMI session reached max life timeout, please re-authenticate</string>
+    <string name="svmpActivity_toast_sessionIdleTimeout">VMI session reached idle timeout, please re-authenticate</string>
     <string name="svmpActivity_toast_needPasswordChange">You must change your password before proceeding</string>
     <string name="svmpActivity_toast_newPasswordFail_noMatch">New password and confirmation do not match!</string>
     <string name="svmpActivity_toast_newPasswordFail_tooShort">New password must be at least 8 characters!</string>
@@ -146,7 +148,7 @@
     <string name="intentHandler_toast_noTelephonyGSM">This device cannot make phone calls!\n(do you need to check your SIM card?)</string>
 
     <!-- SessionService notification resources -->
-    <string name="sessionService_notification_contentTitle">SVMP Session Service</string>
+    <string name="sessionService_notification_contentTitle">VMI Session Service</string>
     <string name="sessionService_notification_contentText_connected">Connected to \'%s\'</string>
     <string name="sessionService_notification_contentText_disconnected">Re-authenticate \'%s\'</string>
     <string name="sessionService_notification_action_open">Open</string>

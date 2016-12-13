@@ -33,7 +33,7 @@ import org.mitre.svmp.common.Constants;
 import org.mitre.svmp.auth.AuthRegistry;
 import org.mitre.svmp.auth.module.CertificateModule;
 import org.mitre.svmp.auth.type.IAuthType;
-import org.mitre.svmp.client.R;
+import org.itri.vmi.client.R;
 import org.mitre.svmp.common.Utility;
 import org.mitre.svmp.widgets.AuthModuleArrayAdapter;
 
@@ -62,6 +62,7 @@ public class ConnectionDetails extends SvmpActivity {
     public void onCreate(Bundle savedInstanceState) {
         this.repopulateOnResume = false;
         super.onCreate(savedInstanceState, R.layout.connection_details);
+
     }
 
     @Override
@@ -115,8 +116,14 @@ public class ConnectionDetails extends SvmpActivity {
         }
         // this is a new connection, fill in the default port
         else {
+           //******************************************************SVMP POC
+        	
+        	//descriptionView.setText(Constants.CONN_DESC[0]);
+            //hostView.setText(Constants.CONN_HOST);
+            //usernameView.setText(Constants.USER[0]);
+          //**********************************************************
             portView.setText(String.valueOf(Constants.DEFAULT_PORT));
-            encryptionView.setSelection(ENCRYPTION_SSLTLS); // by default, encryption is turned on
+            encryptionView.setSelection(ENCRYPTION_NONE); // by default, encryption is turned off
         }
 
         if (!Constants.API_14) {
@@ -161,7 +168,7 @@ public class ConnectionDetails extends SvmpActivity {
                 authType = authTypes[authTypeView.getSelectedItemPosition()].getID();
 
         String certificateAlias = getCertificateAlias();
-        boolean certAuthType = checkAuthTypeCert(authTypeView.getSelectedItemPosition());
+        boolean certAuthType = checkAuthTypeCert(authTypeView.getSelectedItemPosition());////////
 
         // validate input
         if( port < 1 || port > 65535 )
@@ -179,9 +186,11 @@ public class ConnectionDetails extends SvmpActivity {
         else if( certAuthType && !certAliasIsSet)
             toastShort(R.string.connectionDetails_toast_certAuthNeedsAlias);
         else {
-            // create a new ConnectionInfo object
-            ConnectionInfo connectionInfo = new ConnectionInfo(updateID, description, username, host, port,
-                    encryptionType, authType, certificateAlias, 0);
+        	Log.i("encryptionType", Integer.toString(encryptionType));
+        	Log.i("updateID", Integer.toString(updateID));
+        	
+        	// create a new ConnectionInfo object
+            ConnectionInfo connectionInfo = new ConnectionInfo(updateID, description, username, host, port, encryptionType, authType, certificateAlias, 0);
 
             // insert or update the ConnectionInfo in the database
             long result;

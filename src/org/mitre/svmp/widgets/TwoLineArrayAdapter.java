@@ -24,7 +24,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import org.mitre.svmp.client.R;
+import org.itri.vmi.client.R;
 
 /**
  * @author Joe Portner

@@ -24,7 +24,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.GridView;
-import org.mitre.svmp.client.R;
+
+import java.util.List;
+
+import org.itri.vmi.client.R;
 import org.mitre.svmp.common.AppInfo;
 import org.mitre.svmp.common.ConnectionInfo;
 
@@ -72,19 +75,27 @@ public class AppList extends SvmpActivity {
             actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
             actionBar.setDisplayShowTitleEnabled(false);
 
+           
+            
             allApps = new TabListener<AppListFragment>(
                     this, "allApps", AppListFragment.class);
             Tab tab = actionBar.newTab()
                     .setText(R.string.appList_actionBar_allApps)
                     .setTabListener(allApps);
             actionBar.addTab(tab);
-
+            
             favorites = new TabListener<AppListFragment>(
                     this, "favorites", AppListFragment.class);
             tab = actionBar.newTab()
                     .setText(R.string.appList_actionBar_favorites)
                     .setTabListener(favorites);
             actionBar.addTab(tab);
+            
+            
+          //for POC auto-refresh 踕徑會錯
+           /* this.sendRequestCode = REQUEST_REFRESHAPPS_QUICK;
+            authPrompt(connectionInfo); */// utilizes "startActivityForResult", which uses this.sendRequestCode
+            
         }
 
         // if this was started by a desktop shortcut, just launch the requested app

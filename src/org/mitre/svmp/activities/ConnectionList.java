@@ -19,25 +19,33 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 
+import org.mitre.svmp.auth.AuthRegistry;
+import org.mitre.svmp.auth.module.CertificateModule;
 import org.mitre.svmp.auth.module.PasswordModule;
+import org.mitre.svmp.auth.type.IAuthType;
 import org.mitre.svmp.common.ConnectionInfo;
+import org.mitre.svmp.common.Constants;
 import org.mitre.svmp.common.Utility;
 import org.mitre.svmp.services.SessionService;
-import org.mitre.svmp.client.R;
+import org.itri.vmi.client.R;
+import org.mitre.svmp.widgets.AuthModuleArrayAdapter;
 import org.mitre.svmp.widgets.ConnectionInfoArrayAdapter;
+
+import android.view.WindowManager.LayoutParams;
 
 import java.util.List;
 
-/**
- * @author Joe Portner & David Schoenheit
- */
+import org.mitre.svmp.activities.Reboot;
+
 public class ConnectionList extends SvmpActivity {
     private static String TAG = ConnectionList.class.getName();
     private static final int REQUEST_CONNECTIONDETAILS = 100;
@@ -50,6 +58,16 @@ public class ConnectionList extends SvmpActivity {
     private BroadcastReceiver receiver;
     private int sendRequestCode = REQUEST_STARTVIDEO; // used in the "afterStartAppRTC" method to determine what activity gets started
 
+    private int updateID = 0;
+    private IAuthType[] authTypes;
+    private boolean certAliasIsSet = false;
+    
+    private Reboot reboot=new Reboot();
+ 
+
+ 
+    
+    
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.connection_list);
         // title has to be set here instead of in Manifest, for compatibility with shortcuts
@@ -57,6 +75,8 @@ public class ConnectionList extends SvmpActivity {
 
         // enable long-click on the ListView
         registerForContextMenu(listView);
+        //getWindow().setFlags(LayoutParams.FLAG_SECURE, LayoutParams.FLAG_SECURE);//SVMP
+
 
         // register a BroadcastReceiver that will allow for triggered layout refreshes
         // when a running SessionService stops, it sends this broadcast to notify the ConnectionList to update its
@@ -86,9 +106,92 @@ public class ConnectionList extends SvmpActivity {
                 }
             }
         }
+
+        
+
+        
+       
+     /*       for(int i=1;i<17;i++){
+               if ( dbHandler.getConnectionInfo(updateID, Constants.CONN_DESC[i]) == null ) {
+            	   newUser(i);
+               }                       
+            }
+
+        
+        
+        if (Utility.getPrefBool(this, R.string.preferenceKey_connection_useDirectConn, R.string.preferenceValue_connection_useDirectConn)) {
+        		int position = 0;
+        		ConnectionInfo connectionInfo = (ConnectionInfo)listView.getItemAtPosition(position);
+        		startConnectionAppList(connectionInfo);
+        		}*///SVMP
+        
     }
 
-    @Override
+    public void newUser(int i) {
+		// TODO Auto-generated method stub
+    	
+    	authTypes = AuthRegistry.getAuthTypes();
+
+        // get user input
+        String description = Constants.CONN_DESC[i],
+                username = Constants.USER[i],
+                host = Constants.CONN_HOST;
+              //  portString = Constants.DEFAULT_PORT;
+        int port = Constants.DEFAULT_PORT;
+        /*try {
+            port = Integer.parseInt(portString);
+        } catch( NumberFormatException e ) {
+            // don't care
+        }*/
+        int encryptionType = 0,
+                authType = authTypes[0].getID();
+
+        String certificateAlias = "";
+        boolean certAuthType = (authTypes[0].getID() & CertificateModule.AUTH_MODULE_ID) == CertificateModule.AUTH_MODULE_ID;////////
+
+        // validate input
+        if( port < 1 || port > 65535 )
+            toastShort(R.string.connectionDetails_toast_invalidPort);
+        else if( description.length() == 0 )
+            toastShort(R.string.connectionDetails_toast_blankDescription);
+        else if( dbHandler.getConnectionInfo(updateID, description) != null )
+            toastShort(R.string.connectionDetails_toast_ambiguousDescription);
+        else if( username.length() == 0 && !certAuthType ) // username is needed if not using certificate authentication
+            toastShort(R.string.connectionDetails_toast_blankUsername);
+        else if( host.length() == 0 )
+            toastShort(R.string.connectionDetails_toast_blankHost);
+        else if( encryptionType == Constants.ENCRYPTION_NONE && certAuthType )
+            toastShort(R.string.connectionDetails_toast_certAuthNeedsSsl);
+        else if( certAuthType && !certAliasIsSet)
+            toastShort(R.string.connectionDetails_toast_certAuthNeedsAlias);
+        else {
+        	
+        	// create a new ConnectionInfo object
+            ConnectionInfo connectionInfo = new ConnectionInfo(updateID, description, username, host, port, encryptionType, authType, certificateAlias, 0);
+
+            // insert or update the ConnectionInfo in the database
+            long result;
+            if( updateID > 0 )
+                result = dbHandler.updateConnectionInfo(connectionInfo);
+            else
+                result = dbHandler.insertConnectionInfo(connectionInfo);
+
+            // exit and resume previous activity, report results in the intent
+            if( result > -1 && updateID > 0 ) {
+                // we have updated this ConnectionInfo; if session info is stored for this ConnectionInfo, remove it
+                dbHandler.clearSessionInfo(connectionInfo);
+
+                finishMessage(R.string.connectionList_toast_updated, RESULT_REPOPULATE, 0);
+            }
+            else if( result > -1 )
+                finishMessage(R.string.connectionList_toast_added, RESULT_REPOPULATE, 0);
+            else
+                finishMessage(R.string.connectionList_toast_error, RESULT_REPOPULATE, 0);
+        }
+    
+	}
+
+	@Override
     public void onDestroy() {
         super.onDestroy();
         // unregister BroadcastReceiver
@@ -166,6 +269,8 @@ public class ConnectionList extends SvmpActivity {
 
             menu.add(Menu.NONE, 1, 1, R.string.connectionList_context_editConnection_text);
             menu.add(Menu.NONE, 2, 2, R.string.connectionList_context_removeConnection_text);
+            //reboot
+            menu.add(Menu.NONE, 3, 3, R.string.connectionList_context_rebootConnection_text);
 
             // if this uses password authentication, add an option to change the password
             if ((connectionInfo.getAuthType() & PasswordModule.AUTH_MODULE_ID) == PasswordModule.AUTH_MODULE_ID)
@@ -198,6 +303,12 @@ public class ConnectionList extends SvmpActivity {
                 dbHandler.deleteConnectionInfo(connectionID);
                 populateLayout();
                 toastLong(R.string.connectionList_toast_removed);
+                break;
+            case 3: // Reboot
+                 // Reboot the service that's running
+            	   reboot.reboot(connectionInfo.getUsername(), connectionInfo.getHost());
+            	   Toast.makeText(ConnectionList.this, connectionInfo.getUsername()+" rebooting", Toast.LENGTH_LONG).show();
+            	   
                 break;
             case 99: // Change password
                 this.sendRequestCode = REQUEST_CHANGEPASSWORD;

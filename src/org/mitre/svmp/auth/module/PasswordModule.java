@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.EditText;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.mitre.svmp.common.Constants;
 
 /**
  * @author Joe Portner
@@ -39,7 +40,10 @@ public class PasswordModule implements IAuthModule {
         // create the password input
         EditText input = new EditText(context);
         input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        //input.setInputType(InputType.TYPE_CLASS_TEXT);
         input.setHint("Password");
+        //input.setText(Constants.USR_PWD);//SVMP POC
+        input.setText("");
         return input;
     }
 

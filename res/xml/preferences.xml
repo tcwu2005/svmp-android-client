@@ -176,6 +176,12 @@
                         android:summary="@string/checkBoxPreference_connection_useDesktopMode_summary"
                         android:defaultValue="@string/preferenceValue_connection_useDesktopMode"
                         />
+                <CheckBoxPreference
+                   android:key="@string/preferenceKey_connection_useDirectConn"
+                   android:title="@string/checkBoxPreference_connection_useDirectConn_title"
+                   android:summary="@string/checkBoxPreference_connection_useDirectConn_summary"
+                   android:defaultValue="@string/preferenceValue_connection_useDirectConn"
+                   />
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>

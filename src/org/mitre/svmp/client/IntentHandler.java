@@ -23,6 +23,7 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
 import org.mitre.svmp.protocol.SVMPProtocol;
+import org.itri.vmi.client.R;
 
 /**
  * @author Joe Portner

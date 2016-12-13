@@ -45,6 +45,8 @@ public class ConnectionInfo implements Constants{
         this.certificateAlias = certificateAlias;
         this.appCount = appCount;
     }
+    
+
 
     // getters
     public int getConnectionID() {

@@ -22,7 +22,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import org.json.JSONException;
-import org.mitre.svmp.client.R;
+import org.itri.vmi.client.R;
 import org.json.JSONObject;
 
 /**

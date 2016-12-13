@@ -35,6 +35,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
 import org.mitre.svmp.services.SessionService;
+import org.itri.vmi.client.R;
 
 public class SensorHandler implements SensorEventListener, Constants {
     private static final String TAG = SensorHandler.class.getName();

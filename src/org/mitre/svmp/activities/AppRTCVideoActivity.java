@@ -52,6 +52,8 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
+import android.view.WindowManager.LayoutParams;//SVMP limit screenshot
+
 import org.appspot.apprtc.VideoStreamsView;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -61,7 +63,10 @@ import org.mitre.svmp.protocol.SVMPProtocol;
 import org.mitre.svmp.protocol.SVMPProtocol.AppsRequest;
 import org.mitre.svmp.protocol.SVMPProtocol.Request;
 import org.mitre.svmp.protocol.SVMPProtocol.Response;
+import org.itri.vmi.client.R;
 import org.webrtc.*;
+
+import android.content.pm.ActivityInfo;
 
 import java.util.TimeZone;
 
@@ -89,6 +94,8 @@ public class AppRTCVideoActivity extends AppRTCActivity {
         pkgName = intent.getStringExtra("pkgName");
 
         super.onCreate(savedInstanceState);
+        //getWindow().setFlags(LayoutParams.FLAG_SECURE, LayoutParams.FLAG_SECURE); //SVMP limit screenshot
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE); //SVMP LANDSCAPE
     }
 
     @Override

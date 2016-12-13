@@ -16,7 +16,7 @@
 package org.mitre.svmp.common;
 
 import android.os.Build;
-import org.mitre.svmp.client.R;
+import org.itri.vmi.client.R;
 
 /**
  * @author Joe Portner
@@ -25,12 +25,22 @@ public interface Constants {
     // to use a trust store to pin certain CA certificates, replace "res/raw/client_truststore.bks" with your trust store
     // this password is used to open that file
     public static final String TRUSTSTORE_PASSWORD = "changeme_clienttstorepass";
+    //************************************************POC
+    public String CONN_DESC []  = new String[]{"VMI00","VMI01","VMI02","VMI03","VMI04","VMI05","VMI06","VMI07","VMI08","VMI09","VMI10","VMI11","VMI12","VMI13"
+    											,"VMI14","VMI15","VMI16","VMI17"};
+    public String CONN_HOST = "220.228.197.210";
+    public String USER [] =new String[]{ "user0","user1","user2","user3","user4","user5","user6","user7","user8","user9","user10","user11","user12","user13"
+    									,"user14","user15","user16","user17"};
+    public String USR_PWD = "Useruser111@";
+    //********************************************************
 
+    
     public static final int DEFAULT_PORT = 3000;
     public static final String ACTION_REFRESH = "org.mitre.svmp.ACTION_REFRESH"; // causes SvmpActivity to refresh its layout
     public static final String ACTION_STOP_SERVICE = "org.mitre.svmp.ACTION_STOP_SERVICE"; // causes
     public static final String ACTION_LAUNCH_APP = "org.mitre.svmp.LAUNCH_APP";
-    public static final String PERMISSION_REFRESH = "org.mitre.svmp.PERMISSION_REFRESH"; // required to send ACTION_REFRESH intent
+    //public static final String PERMISSION_REFRESH = "org.mitre.svmp.PERMISSION_REFRESH"; // required to send ACTION_REFRESH intent
+    public static final String PERMISSION_REFRESH = "org.mitre.svmp.REFRESH";
     public static final boolean API_19 = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT);
     public static final boolean API_15 = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1);
     public static final boolean API_14 = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH);

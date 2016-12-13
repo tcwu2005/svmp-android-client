@@ -50,7 +50,7 @@ import org.mitre.svmp.performance.PerformanceTimer;
 import org.mitre.svmp.services.SessionService;
 import org.mitre.svmp.activities.AppRTCActivity;
 import org.mitre.svmp.auth.AuthData;
-import org.mitre.svmp.client.R;
+import org.itri.vmi.client.R;
 import org.mitre.svmp.common.*;
 import org.mitre.svmp.protocol.SVMPProtocol.*;
 import org.mitre.svmp.common.StateMachine.STATE;

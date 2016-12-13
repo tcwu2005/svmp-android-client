@@ -63,6 +63,7 @@ import org.mitre.svmp.performance.PerformanceAdapter;
 import org.mitre.svmp.protocol.SVMPProtocol.Request;
 import org.mitre.svmp.protocol.SVMPProtocol.Response;
 import org.mitre.svmp.services.SessionService;
+import org.itri.vmi.client.R;
 import org.webrtc.*;
 import org.mitre.svmp.common.StateMachine.STATE;
 

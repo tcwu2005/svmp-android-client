@@ -15,7 +15,7 @@
  */
 package org.mitre.svmp.widgets;
 
-import android.R;
+import android.R;/////改package name別改到
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
