@@ -35,7 +35,7 @@ import java.util.TimerTask;
  */
 public class RotationHandler extends OrientationEventListener {
     private static final String TAG = RotationHandler.class.getName();
-
+	
     // the current rotation has a wider allowance of degrees before triggering a rotation change event
     private static final int ANGLE_ALLOWANCE = 130;
     // the number of milliseconds we wait before triggering a rotation change event
@@ -43,7 +43,11 @@ public class RotationHandler extends OrientationEventListener {
 
     private AppRTCActivity activity;
     private boolean running = false;
-    private int rotation = 0; // valid values are: 0, 1, 2, 3
+    
+    //private int rotation = 0; // valid values are: 0, 1, 2, 3
+    //tcwu2005
+    private int rotation = 3;	//ROTATION_270
+    
     private int proposedRotation = 0;
     private int currentMin;
     private int currentMax;
@@ -67,7 +71,7 @@ public class RotationHandler extends OrientationEventListener {
             // enable listener for rotation changes
             enable();
             Log.d(TAG, "Can detect orientation, RotationHandler has been enabled");
-
+           
             // send initial rotation
             sendRotationInfo();
         }
@@ -82,6 +86,8 @@ public class RotationHandler extends OrientationEventListener {
 
     @Override
     public void onOrientationChanged(int i) {
+    	//Log.d(TAG,"onOrientationChanged_1 orientation("+i+")");  //i is angle
+    	//Log.d(TAG,"onOrientationChanged_1 orientation("display.getOrientation());
         if (i != ORIENTATION_UNKNOWN) {
             int newRotation = getUpdatedRotation(i);
             if (rotateTask == null && rotation != newRotation) {
@@ -109,17 +115,19 @@ public class RotationHandler extends OrientationEventListener {
     // takes input of 0 to 359, outputs the rotation detected (0, 1, 2, or 3)
     // weighted based on current rotation, i.e. has an angle allowance greater than 90 degrees
     private int getUpdatedRotation(int degrees) {
+    	Log.d(TAG,"getUpdatedRotation-1,degrees("+degrees+")");
         int value = rotation;
         if (outsideCurrentMinMax(degrees)) {
             if (degrees >= 315 || degrees < 45)
-                value = Surface.ROTATION_0;
+            	value = Surface.ROTATION_270; //value = Surface.ROTATION_0;
             else if (degrees >= 45 && degrees < 135)
-                value = Surface.ROTATION_270;
+            	value = Surface.ROTATION_180; //value = Surface.ROTATION_270;
             else if (degrees >= 135 && degrees < 225)
-                value = Surface.ROTATION_180;
+            	value = Surface.ROTATION_90;  //value = Surface.ROTATION_180;
             else if (degrees >= 225 && degrees < 315)
-                value = Surface.ROTATION_90;
+            	value = Surface.ROTATION_0;  //value = Surface.ROTATION_90;
         }
+        Log.d(TAG,"getUpdatedRotation-2,Surface.Rotation("+value+")");
         return value;
     }
 
