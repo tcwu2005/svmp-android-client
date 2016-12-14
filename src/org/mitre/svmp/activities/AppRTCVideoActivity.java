@@ -68,7 +68,6 @@ import org.webrtc.*;
 
 import android.content.pm.ActivityInfo;
 
-import java.util.EnumSet;
 import java.util.TimeZone;
 
 /**
@@ -96,8 +95,6 @@ public class AppRTCVideoActivity extends AppRTCActivity {
 
         super.onCreate(savedInstanceState);
         //getWindow().setFlags(LayoutParams.FLAG_SECURE, LayoutParams.FLAG_SECURE); //SVMP limit screenshot
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE); //SVMP LANDSCAPE
-        Log.d(TAG, "setRequestedOrientation(SCREEN_ORIENTATION_LANDSCAPE)");
     }
 
     @Override
@@ -110,12 +107,19 @@ public class AppRTCVideoActivity extends AppRTCActivity {
 
         Point displaySize = new Point();
         getWindowManager().getDefaultDisplay().getSize(displaySize);
-        int width=displaySize.x;
-        int height=displaySize.y;
-        Log.d(TAG,"displaySize(width,height)=("+width+","+height+")");
-        displaySize.x=height;
-        displaySize.y=width;
-        Log.d(TAG,"sway,displaySize(width,height)=("+displaySize.x+","+displaySize.y+")");
+        
+        //tcwu2005
+        if (this.getFlagRemoteLandscape()==true){
+            Log.d(TAG, "setRequestedOrientation(SCREEN_ORIENTATION_LANDSCAPE)");
+        	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE); //SVMP LANDSCAPE
+        	int width=displaySize.x;
+	        int height=displaySize.y;
+	        Log.d(TAG,"displaySize(width,height)=("+width+","+height+")");
+	        displaySize.x=height;
+	        displaySize.y=width;
+	        Log.d(TAG,"sway,displaySize(width,height)=("+displaySize.x+","+displaySize.y+")");
+        }
+        
         vsv = new VideoStreamsView(this, displaySize, performanceAdapter);
         vsv.setBackgroundColor(Color.DKGRAY); // start this VideoStreamsView with a color of dark gray
         setContentView(vsv);

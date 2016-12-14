@@ -90,11 +90,11 @@ public class AppRTCActivity extends Activity implements StateObserver, MessageHa
     protected boolean proxying = false; // if this is true, we have finished the handshakes and the connection is running
     private ProgressDialog pd;
     
-    /* Flag isRemoteLandscape should be detected and updated automatically someday but not now, 
+    /* //tcwu2005
+     * Flag isRemoteLandscape should be detected and updated automatically someday but not now, 
      * Here I just set it to true for demo purpose 
      */
     private boolean isRemoteLandscape=true;
-    
     public boolean getFlagRemoteLandscape(){
     	return isRemoteLandscape;
     }
